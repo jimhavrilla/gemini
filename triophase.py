@@ -26,10 +26,6 @@ def phase_genotypes(kid_idx, mom_idx, dad_idx, gq):
 		dad_gt_type = str(row['gt_types'][dad_idx])
 		mom_gt_type = str(row['gt_types'][mom_idx])
 
-		#m=re.search('(chr(?:\S*\s*){5})((?:\w*|\.*)/(?:\w*|\.*),{0,1})\s*((?:\w*|\.*)/(?:\w*|\.*),{0,1})\s*((?:\w*|\.*)/(?:\w*|\.*),{0,1})\s*(\d,{0,1})(\d,{0,1})(\d,{0,1})',str(row))
-		#newlist.append([m.group(1).strip(","),m.group(2).strip(","),m.group(3).strip(","),m.group(4).strip(","),m.group(5).strip(","),m.group(6).strip(","),m.group(7).strip(",")])
-		#print chrom + "	" + start + "	" + end + "	" + ref + "	" + alt + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + kid_gt_type + "	" + dad_gt_type + "	" + mom_gt_type
-
 		m4=re.search('((?:\w*|\.*))/((?:\w*|\.*))',kid_gt)
 		m5=re.search('((?:\w*|\.*))/((?:\w*|\.*))',dad_gt)
 		m6=re.search('((?:\w*|\.*))/((?:\w*|\.*))',mom_gt)
@@ -40,8 +36,6 @@ def phase_genotypes(kid_idx, mom_idx, dad_idx, gq):
 		# 	kid_ = family.get_kid_idx()
 		# 	dad_ = family.get_dad_idx()
 		# 	mom_ = family.get_mom_idx()
-
-
 
 		if kid_gt_type == 2 or dad_gt_type == 2 or mom_gt_type == 2:
 			mendelian = "missing allele - unknown"
