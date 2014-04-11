@@ -1,6 +1,4 @@
 import sys
-import re
-import fileinput
 import string
 from gemini import GeminiQuery
 from gemini import gemini_subjects as subjects
@@ -40,7 +38,7 @@ def phase_genotypes(database):
 			#m6=re.search('((?:\w*|\.*))/((?:\w*|\.*))',mom_gt)
 			m6=string.split(mom_gt,"/")
 			for child in family.children:
-				kid_idx = s2i[str(child.name)]			
+				kid_idx = s2i[str(child.name)]
 				kid_gt = str(row['gts'][kid_idx])
 				kid_gt_type = row['gt_types'][kid_idx]
 				kid_gt_ref_depths = str(row['gt_ref_depths'][kid_idx])
@@ -131,7 +129,7 @@ def phase_genotypes(database):
 					inheritance = "homozygous alternate from dad_gt_type, homozygous reference from mom_gt_type"
 					origin = "inherited from both parents or unlikely de novo"
 					phasedata = m5[0]+" from dad "+m6[0]+" from mom"
-				elif kid_gt_type == 1 and dad_gt_type == 0 and mom_gt_type == 3: #line 10 in excel sheet
+				elif kid_gt_type == 1 and dad_gt_type == 0 and mom_gt_type == 3:
 					mendelian = "mendelian"
 					phasable = "phasable"
 					inheritance = "homozygous reference from dad_gt_type, homozygous alternate from mom_gt_type"
@@ -143,8 +141,8 @@ def phase_genotypes(database):
 					inheritance = "unknown"
 					origin = "de novo or erroneous data"
 				try: 
-					print chrom + "	" + start + "	" + end + "	" + ref + "	" + alt + "	" + gene + "	" + impact + "	" + kid_gt_ref_depths + "	" + mom_gt_ref_depths + "	" + dad_gt_ref_depths + "	" + kid_gt_alt_depths + "	" + mom_gt_alt_depths + "	" + dad_gt_alt_depths + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + str(kid_gt_type) + "	" + str(dad_gt_type) + "	" + str(mom_gt_type) + "	" + mendelian + "	" + phasable + "	" + inheritance + "	" + origin + "	" + phasedata
+					print chrom + "	" + start + "	" + end + "	" + family.family_id + "	" + child.name + "	" + ref + "	" + alt + "	" + gene + "	" + impact + "	" + kid_gt_ref_depths + "	" + mom_gt_ref_depths + "	" + dad_gt_ref_depths + "	" + kid_gt_alt_depths + "	" + mom_gt_alt_depths + "	" + dad_gt_alt_depths + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + str(kid_gt_type) + "	" + str(dad_gt_type) + "	" + str(mom_gt_type) + "	" + mendelian + "	" + phasable + "	" + inheritance + "	" + origin + "	" + phasedata
 				except TypeError:	
-					print chrom + "	" + start + "	" + end + "	" + ref + "	" + alt + "	" + gene + "	" + impact + "	" + kid_gt_ref_depths + "	" + mom_gt_ref_depths + "	" + dad_gt_ref_depths + "	" + kid_gt_alt_depths + "	" + mom_gt_alt_depths + "	" + dad_gt_alt_depths + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + str(kid_gt_type) + "	" + str(dad_gt_type) + "	" + str(mom_gt_type) + "	" + mendelian + "	" + phasable + "	" + inheritance + "	" + origin
+					print chrom + "	" + start + "	" + end + "	" + family.family_id + "	" + child.name + "	" + ref + "	" + alt + "	" + gene + "	" + impact + "	" + kid_gt_ref_depths + "	" + mom_gt_ref_depths + "	" + dad_gt_ref_depths + "	" + kid_gt_alt_depths + "	" + mom_gt_alt_depths + "	" + dad_gt_alt_depths + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + str(kid_gt_type) + "	" + str(dad_gt_type) + "	" + str(mom_gt_type) + "	" + mendelian + "	" + phasable + "	" + inheritance + "	" + origin
 
 phase_genotypes(sys.argv[1])
