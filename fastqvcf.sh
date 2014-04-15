@@ -85,9 +85,8 @@ export BIN=/m/cphg-quinlan3/cphg-quinlan3/jmh2tt/bin
 for chrom in {1..22} X Y
 do
 export QSUB="qsub -W group_list=cphg_arq5x -q arq5xlab -V -l select=1:mem=8gb:ncpus=1 -N $STEPNAME -m bea -M jmh2tt@virginia.edu";
-echo "$BIN/freebayes -L $SMSHOME/bam_list -f $GENOME -0 --min-coverage 10 \
+echo "$BIN/freebayes -L $SMSHOME/bam_list -f $GENOME --min-coverage 10 \
 --region $chrom \
-[[[****OTHER ARGUMENTS HERE***]]]]
 > $VCF/$NAME.rmdup.freebayes.$chrom.vcf" | $QSUB
 done
 
