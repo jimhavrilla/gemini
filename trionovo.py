@@ -19,18 +19,18 @@ def find_de_novo():
 	
 	#checks minimum number of arguments
 	if len(sys.argv)<1:
-    	parser.print_help()
-    	sys.exit("Where is the input file?")
+		parser.print_help()
+		sys.exit("Where is the input file?")
     
     #parses arguments
-    args = parser.parse_args()
+	args = parser.parse_args()
 	database=args.input_file
 	mtpd=int(args.min_total_parent_depth)
 	mtcd=int(args.min_total_child_depth)
 	mapd=int(args.max_alt_parent_depth)
 	macd=int(args.max_alt_child_depth)
 	if database == '':
-        sys.exit("You must supply an input file")
+		sys.exit("You must supply an input file")
 
 	gq=GeminiQuery(database)
 	families = subjects.get_families(database)
@@ -71,11 +71,11 @@ def find_de_novo():
 				kid_gt_ref_depths = str(row['gt_ref_depths'][kid_idx])
 				kid_gt_alt_depths = str(row['gt_alt_depths'][kid_idx])
 				#code for removing variants that do not meet parameters
-    			if int(dad_gt_ref_depths)+int(dad_gt_alt_depths)<mtpd or int(mom_gt_ref_depths)+int(mom_gt_alt_depths)<mtpd \
-    			or int(kid_gt_ref_depths)+int(kid_gt_alt_depths)<mtcd \
-    			or int(dad_gt_alt_depths)+int(dad_gt_alt_depths)>mapd or int(mom_gt_alt_depths)+int(mom_gt_alt_depths)>mapd
-    			or int(kid_gt_alt_depths)+int(kid_gt_alt_depths)>macd: \
-    				continue				
+				if int(dad_gt_ref_depths)+int(dad_gt_alt_depths)<mtpd or int(mom_gt_ref_depths)+int(mom_gt_alt_depths)<mtpd \
+				or int(kid_gt_ref_depths)+int(kid_gt_alt_depths)<mtcd \
+				or int(dad_gt_alt_depths)>mapd or int(mom_gt_alt_depths)>mapd \
+				or int(kid_gt_alt_depths)>macd: \
+					continue				
 				if kid_gt_type == 2 or dad_gt_type == 2 or mom_gt_type == 2:
 					continue
 				elif kid_gt_type == 1 and dad_gt_type == 0 and mom_gt_type == 0 or kid_gt_type == 1 and dad_gt_type == 3 and mom_gt_type == 3:
@@ -103,7 +103,9 @@ def find_de_novo():
 					phasable = "unphasable"
 					inheritance = "unknown"
 					origin = "de novo or erroneous data"
-				
+				else:
+					continue
+
 				print chrom + "	" + start + "	" + end + "	" + family.family_id + "	" + child.name + "	" + ref + "	" + alt + "	" + gene + "	" + impact + "	" + kid_gt_ref_depths + "	" + dad_gt_ref_depths + "	" + mom_gt_ref_depths + "	" + kid_gt_alt_depths + "	" + dad_gt_alt_depths + "	" + mom_gt_alt_depths + "	" + kid_gt + "	" + dad_gt + "	" + mom_gt + "	" + str(kid_gt_type) + "	" + str(dad_gt_type) + "	" + str(mom_gt_type) + "	" + mendelian + "	" + phasable + "	" + inheritance + "	" + origin
 
 find_de_novo()
